@@ -1,11 +1,9 @@
-import React from 'react';
-import moment from 'moment';
 import { List, ListItem } from '@material-ui/core';
-import styled from 'styled-components';
-import { useCallback } from 'react';
 import { History } from 'history';
-import { useQuery } from '@apollo/react-hooks';
-import * as queries from '../../graphql/queries';
+import moment from 'moment';
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
+import { useChatsQuery } from '../../graphql/types';
 
 const Container = styled.div`
   height: calc(100% - 56px);
@@ -64,7 +62,7 @@ interface ChatsListProps {
 }
 
 const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
-  const { data } = useQuery<any>(queries.chats);
+  const { data } = useChatsQuery();
 
   const navToChat = useCallback(
     (chat) => {
