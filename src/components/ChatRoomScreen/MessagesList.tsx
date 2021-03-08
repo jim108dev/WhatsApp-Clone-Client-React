@@ -1,34 +1,20 @@
-import format from 'date-fns/format';
+import moment from 'moment';
 import React from 'react';
 import { useEffect, useRef } from 'react';
-import styled, { css } from 'styled-components';
-import { useInfiniteScroll } from '../../hooks/use-infinite-scroll';
-import { useAdjustedScroll } from '../../hooks/use-adjusted-scroll';
+import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+import { ChatQueryMessage } from './index';
 
 const Container = styled.div`
-  position: relative;
   display: block;
   flex: 2;
   overflow-y: overlay;
   padding: 0 15px;
 `;
 
-const LoadingMore = styled.div`
-  height: 30px;
-  line-height: 30px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-`;
-
-type StyledProp = {
-  isMine: any;
-};
-
 const MessageItem = styled.div`
+  float: right;
+  background-color: #dcf8c6;
   display: inline-block;
   position: relative;
   max-width: 100%;
@@ -45,36 +31,17 @@ const MessageItem = styled.div`
   }
 
   &::before {
+    background-image: url(/assets/message-mine.png);
     content: '';
     position: absolute;
     bottom: 3px;
     width: 12px;
     height: 19px;
+    right: -11px;
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: contain;
   }
-
-  ${(props: StyledProp) =>
-    props.isMine
-      ? css`
-          float: right;
-          background-color: #dcf8c6;
-
-          &::before {
-            right: -11px;
-            background-image: url(/assets/message-mine.png);
-          }
-        `
-      : css`
-          float: left;
-          background-color: #fff;
-
-          &::before {
-            left: -11px;
-            background-image: url(/assets/message-other.png);
-          }
-        `}
 `;
 
 const Contents = styled.div`
@@ -95,53 +62,27 @@ const Timestamp = styled.div`
   font-size: 12px;
 `;
 
-interface Message {
-  id: string | null;
-  content: string | null;
-  createdAt: string | null;
-}
 interface MessagesListProps {
-  messages: Array<Message>;
-  loadMore: Function;
-  hasMore: boolean;
+  messages: Array<ChatQueryMessage>;
 }
 
-const MessagesList: React.FC<MessagesListProps> = ({
-  messages,
-  loadMore,
-  hasMore,
-}) => {
-  const selfRef = useRef<HTMLDivElement>(null);
-  const [fetching, stopFetching] = useInfiniteScroll({
-    onLoadMore: loadMore,
-    hasMore,
-    ref: selfRef!,
-  });
-  const adjustScroll = useAdjustedScroll(selfRef);
+const MessagesList: React.FC<MessagesListProps> = ({ messages }) => {
+  const selfRef = useRef(null);
 
   useEffect(() => {
     if (!selfRef.current) return;
 
-    if (fetching) {
-      stopFetching();
-      adjustScroll();
-    } else {
-      // scroll to the most recent message
-      adjustScroll(true);
-    }
-  }, [messages.length, selfRef, fetching, stopFetching, adjustScroll]);
+    const selfDOMNode = ReactDOM.findDOMNode(selfRef.current) as HTMLElement;
+    selfDOMNode.scrollTop = Number.MAX_SAFE_INTEGER;
+  }, [messages.length]);
 
   return (
     <Container ref={selfRef}>
-      {fetching && <LoadingMore>{'Loading more messages...'}</LoadingMore>}
       {messages.map((message: any) => (
-        <MessageItem
-          data-testid="message-item"
-          isMine={message.isMine}
-          key={message.id}>
+        <MessageItem data-testid="message-item" key={message.id}>
           <Contents data-testid="message-content">{message.content}</Contents>
           <Timestamp data-testid="message-date">
-            {format(message.createdAt, 'HH:mm')}
+            {moment(message.createdAt).format('HH:mm')}
           </Timestamp>
         </MessageItem>
       ))}

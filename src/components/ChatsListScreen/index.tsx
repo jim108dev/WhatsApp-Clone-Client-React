@@ -3,7 +3,6 @@ import ChatsNavbar from './ChatsNavbar';
 import ChatsList from './ChatsList';
 import styled from 'styled-components';
 import { History } from 'history';
-import AddChatButton from './AddChatButton';
 
 const Container = styled.div`
   height: 100vh;
@@ -15,9 +14,8 @@ interface ChatsListScreenProps {
 
 const ChatsListScreen: React.FC<ChatsListScreenProps> = ({ history }) => (
   <Container>
-    <ChatsNavbar history={history} />
+    <ChatsNavbar />
     <ChatsList history={history} />
-    <AddChatButton history={history} />
   </Container>
 );
 

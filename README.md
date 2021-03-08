@@ -1,68 +1,46 @@
-# Whatsapp Clone Client
+# Getting Started with Create React App
 
-[//]: # (head-end)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Available Scripts
 
+In the project directory, you can run:
 
-A full working React client for a WhatsApp clone written in latest versions of:
+### `yarn start`
 
-* [React](https://github.com/facebook/react)
-* [Material-UI](https://github.com/mui-org/material-ui)
-* [Styled Components](https://github.com/styled-components/styled-components)
-* [GraphQL](https://github.com/graphql/graphql-js)
-* [Typescript](https://github.com/microsoft/TypeScript)
-* [Apollo-Client](https://github.com/apollographql/apollo-client)
-* [GraphQL Code Generator](https://github.com/dotansimha/graphql-code-generator)
-* [Jest](https://github.com/facebook/jest)
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This React client is constantly being updated by using CI tests and renovate.
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-You can watch this repository to learn about new updates or check out the git diffs between new versions on the [tutorial's version diff pages](https://www.tortilla.academy/Urigo/WhatsApp-Clone-Tutorial) (at the top of the screen).
+### `yarn test`
 
-It can be used as a boilerplate, a full blown example app and even as a [tutorial](https://github.com/Urigo/WhatsApp-Clone-Tutorial).
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-It also is being accompanied by a WhatsApp clone server located in [this repository](https://github.com/Urigo/WhatsApp-Clone-Server).
+### `yarn build`
 
-## Running locally
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Clone the project.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Clone the [server](https://github.com/Urigo/WhatsApp-Clone-Server) -> make sure both projects are under the same folder and that the server folder
-is named by the default name of the server repo `Whatsapp-Clone-Server`.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Install dependencies:
+### `yarn eject`
 
-`yarn`
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-Run the codegen to generate Typescript types from GraphQL (this step requires the server to be cloned under the same repo and its folder to be with it's default name):
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-`yarn codegen`
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Run tests to make sure everything is ok:
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-`yarn test`
+## Learn More
 
-Start the client:
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-`yarn start`
-
-This repository is using the Tortilla project for creating tutorials from real apps and git.
-For more information, see https://www.tortilla.academy/ and https://www.npmjs.com/package/tortilla.
-
-### External contributors
-
-* [TVaakanainen](https://github.com/TVaakanainen)
-* [braedongough](https://github.com/braedongough)
-* [milenazuccarelli](https://github.com/milenazuccarelli)
-* [czd](https://github.com/czd)
-* [peterennis](https://github.com/peterennis)
-
-
-[//]: # (foot-start)
-
-[{]: <helper> (navStep)
-
-| [Begin Tutorial >](.tortilla/manuals/views/step1.md) |
-|----------------------:|
-
-[}]: #
+To learn React, check out the [React documentation](https://reactjs.org/).
