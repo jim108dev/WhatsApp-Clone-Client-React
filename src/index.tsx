@@ -1,10 +1,10 @@
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloProvider } from '@apollo/react-hooks';
-import './index.css';
 import App from './App';
 import client from './client';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 const theme = createMuiTheme({

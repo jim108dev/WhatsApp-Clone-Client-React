@@ -72,6 +72,7 @@ const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
   );
 
   if (data === undefined || data.chats === undefined) {
+    console.log('data:', data);
     return null;
   }
   let chats = data.chats;

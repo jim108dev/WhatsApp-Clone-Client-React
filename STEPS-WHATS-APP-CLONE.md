@@ -425,4 +425,71 @@ yarn start
 1. `MessagesList.tsx`: Create interface `Message`. Remove `ChatQueryMessage`.
 1. `ChatsListScreen/ChatsList.tsx`: Replace `useQuery<any>(queries.chats)` by `useChatsQuery()`.
 
-1.  
+Problem: Posting a message and returning to the chats list results in
+
+```log
+Unhandled Rejection (Error): can't define array index property past the end of an array with non-writable length
+ApolloError
+src/errors/index.ts:49
+
+  46 | // Constructs an instance of ApolloError given a GraphQLError
+  47 | // or a network error. Note that one of these has to be a valid
+  48 | // value or the constructed error will be meaningless.
+> 49 | constructor({
+     | ^  50 |   graphQLErrors,
+  51 |   networkError,
+  52 |   errorMessage,
+
+next
+src/core/QueryManager.ts:217
+
+  214 |     update: updateWithProxyFn,
+  215 |   });
+  216 | } catch (e) {
+> 217 |   error = new ApolloError({
+      | ^  218 |     networkError: e,
+  219 |   });
+  220 |   return;
+
+iterateObserversSafely/<
+src/utilities/observables/iteration.ts:13
+
+  10 |   // to just the observers with the given method.
+  11 |   const observersWithMethod: Observer<E>[] = [];
+  12 |   observers.forEach(obs => obs[method] && observersWithMethod.push(obs));
+> 13 |   observersWithMethod.forEach(obs => (obs as any)[method](argument));
+  14 | }
+  15 | 
+
+iterateObserversSafely
+src/utilities/observables/iteration.ts:13
+
+  10 |   // to just the observers with the given method.
+  11 |   const observersWithMethod: Observer<E>[] = [];
+  12 |   observers.forEach(obs => obs[method] && observersWithMethod.push(obs));
+> 13 |   observersWithMethod.forEach(obs => (obs as any)[method](argument));
+  14 | }
+  15 | 
+
+next
+src/utilities/observables/Concast.ts:171
+
+  168 | next: (result: T) => {
+  169 |   if (this.sub !== null) {
+  170 |     this.latest = ["next", result];
+> 171 |     iterateObserversSafely(this.observers, "next", result);
+      | ^  172 |   }
+  173 | },
+  174 | 
+
+createHttpLink/</</<
+src/httpLink.ts:142
+
+  139 | .then(parseAndCheckHttpResponse(operation))
+  140 | .then(result => {
+  141 |   // we have data and can send it to back up the link chain
+> 142 |   observer.next(result);
+      | ^  143 |   observer.complete();
+  144 |   return result;
+  145 | })
+```
