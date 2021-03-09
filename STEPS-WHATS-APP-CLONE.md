@@ -374,56 +374,8 @@ yarn start
 
 1. Create Fragments: `graphql/fragments/`: `chat.fragments.ts`, `index.ts`, `message.fragments.ts`
 1. `ChatRoomScreen/index.tsx`:
-1. Problem at `http://localhost:3000/chats/1`:
 
-   ```log
-   Unhandled Rejection (Error): can't define array index property past the end of an array with non-writable length
-   ```
-
-## Step 9: Type safety with GraphQL Code Generator
-
-### Install code generator for the server
-
-1. Install code generator in the server project
-
-    ```sh
-    yarn add @graphql-codegen/cli --dev
-    yarn add @graphql-codegen/typescript @graphql-codegen/typescript-resolvers --dev
-
-    ```
-
-1. `package.json`: Add:
-
-    ```json
-    "prestart": "yarn codegen",
-    "codegen": "graphql-codegen",
-    ```
-
-1. Create `codegen.yml`: It generates `./types/graphql.d.ts`.
-1. `.gitignore`: Add `types/graphql.d.ts`.
-1. `schema/index.ts`:  Add `IResolvers`. Remove `any`.
-
-### Install code generator for the client
-
-1. Install
-
-    ```sh
-    yarn add @graphql-codegen/cli --dev
-    yarn add @graphql-codegen/cli @graphql-codegen/typescript @graphql-codegen/typescript-operations @graphql-codegen/typescript-react-apollo @graphql-codegen/add
-    yarn add -D @graphql-codegen/add
-    ```
-
-1. `package.json`: Add
-
-    ```json
-    "codegen": "graphql-codegen"
-    ```
-
-1. Create `codegen.yml`. Add `content` after `add:`.
-1. `.gitignore`: Add `src/graphql/types.tsx`.
-1. `ChatNavbar.tsx`: Instead of `ChatQueryResult` use `chat?: ...`.
-1. `MessagesList.tsx`: Create interface `Message`. Remove `ChatQueryMessage`.
-1. `ChatsListScreen/ChatsList.tsx`: Replace `useQuery<any>(queries.chats)` by `useChatsQuery()`.
+### Problem at `http://localhost:3000/chats/1`: Add Message
 
 Problem: Posting a message and returning to the chats list results in
 
@@ -492,4 +444,11 @@ src/httpLink.ts:142
       | ^  143 |   observer.complete();
   144 |   return result;
   145 | })
+```
+
+By using the debugger I was able to locate the line in `ChatRoomScreen/index.tsx`:
+
+```typescript
+fullChat.messages.push(data.addMessage); 
+fullChat.lastMessage = data.addMessage; // <- is not reached.
 ```

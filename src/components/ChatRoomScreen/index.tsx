@@ -73,7 +73,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
     (content: string) => {
       addMessage({
         variables: { chatId, content },
-        /*optimisticResponse: {
+        optimisticResponse: {
           __typename: 'Mutation',
           addMessage: {
             __typename: 'Message',
@@ -81,7 +81,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
             createdAt: new Date(),
             content,
           },
-        },*/
+        },
         update: (client, { data }) => {
           if (data && data.addMessage) {
             type FullChat = { [key: string]: any };
